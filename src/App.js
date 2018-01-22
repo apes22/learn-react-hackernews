@@ -34,7 +34,7 @@ const list = [
 
 class App extends Component {
 
-    //The construct ir called only once when the component is initialized
+    //The construct is called only once when the component is initialized
     //initialize internal component state
     //mandatory to call the super method because this "App" component is a subclass of Component
   constructor(props){
@@ -42,10 +42,28 @@ class App extends Component {
     //The state is bound to the class using the this object. You can acess the local state in your whole component
     //the list is part of the component now
     this.state = {
-      list: list,
+      //Since the property name is the same of the variable name in this object, we can shorten the following line
+      //list: list,
+      list,
       helloWorld: 'Welcome to the Road to learn React',
       comment: "This is coming form the local state of this component woooo!"
+    };
+    this.onDismiss = this.onDismiss.bind(this);
+    //this.doSomething = this.doSomething.bind(this);
+    //avoid defining the business logic inside the constructor because it makes it messy
+   /* this.onClick = () =>{
+      console.log(this);
     }
+    */
+  }
+
+  doSomething(){
+    console.log(this);
+  }
+  onDismiss(id){
+    const isNotId =  item => item.objectID !== id;
+    const updatedList = this.state.list.filter(isNotId);
+    this.setState({list: updatedList});
   }
   render() {
     const user = {
@@ -73,6 +91,26 @@ class App extends Component {
               <span>{item.author} </span>
               <span>{item.num_comments} </span>
               <span>{item.points}</span>
+              <span>
+                <button
+                  onClick = {() => this.onDismiss(item.objectID)}
+                  type="button"
+                >
+                  Dismiss
+                </button>
+              </span>
+              Testing binding this:
+              <button
+                //method 1: bind this to the doSomething method in constructor
+                 onClick = {this.doSomething}
+                //method 2: bind this inside the render class method.
+                //Avoid because it is binding the class method everytime render rusn
+
+                //onClick = {this.doSomething.bind(this)}
+                type="button"
+              >
+              Do Something
+              </button>
            </div>
           )}
         </p>
