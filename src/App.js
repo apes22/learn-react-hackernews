@@ -88,6 +88,14 @@ class App extends Component {
     this.setState({list: updatedList});
   }
   render() {
+
+    //Destructuring (extracting values from objects and arrays)
+    //ES5
+    // const searchTerm = this.state.searchTerm
+    //const list = this.state.list
+    
+    //ES6
+    const {searchTerm, list} = this.state;
     
     return (
       <div className="App">
@@ -105,7 +113,8 @@ class App extends Component {
        <h4> Below is your predefined list:</h4>
         {        
           //Using the list from my local state in my component
-          this.state.list.filter(isSearched(this.state.searchTerm)).map(item => 
+         // this.state.list.filter(isSearched(this.state.searchTerm)).map(item => 
+         list.filter(isSearched(searchTerm)).map(item => 
             <div key = {item.objectID}>
               <span>
                 <a href={item.url}>{item.title} </a>
