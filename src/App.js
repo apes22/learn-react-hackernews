@@ -49,7 +49,7 @@ class App extends Component {
       comment: "This is coming form the local state of this component woooo!"
     };
     this.onDismiss = this.onDismiss.bind(this);
-    //this.doSomething = this.doSomething.bind(this);
+    this.doSomething = this.doSomething.bind(this);
     //avoid defining the business logic inside the constructor because it makes it messy
    /* this.onClick = () =>{
       console.log(this);
@@ -66,21 +66,15 @@ class App extends Component {
     this.setState({list: updatedList});
   }
   render() {
-    const user = {
-        firstName: "Maribel",
-        lastName: "Duran"
-    };
     
     return (
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">{this.state.helloWorld}</h1>
-          <h3>Welcome {user.firstName} {user.lastName}!</h3>
         </header>
         <p className="App-intro">
        <h4> Below is your predefined list:</h4>
-
         {        
           //Using the list from my local state in my component
           this.state.list.map(item => 
@@ -93,7 +87,13 @@ class App extends Component {
               <span>{item.points}</span>
               <span>
                 <button
-                  onClick = {() => this.onDismiss(item.objectID)}
+                //  onClick = {() => this.onDismiss(item.objectID)}
+                   // onClick = {console.log(item.objectID)}
+                   /*onClick = {function(){
+                     console.log(item.objectID)
+                   }}
+                   */
+                  onClick = {() => console.log(item.objectID)}
                   type="button"
                 >
                   Dismiss
