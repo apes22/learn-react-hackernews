@@ -96,7 +96,7 @@ class App extends Component {
     
     //ES6
     const {searchTerm, list} = this.state;
-    
+
     return (
       <div className="App">
         <header className="App-header">
@@ -107,6 +107,9 @@ class App extends Component {
         <form>
           <input 
             type="text" 
+            //The internal component state is the single source of truth for the input field.
+            //The unidirectional data flow loop for the input field is self-contained now
+            value={searchTerm}
             onChange={this.onSearchChange}     
           />
         </form>
