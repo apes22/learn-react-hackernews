@@ -104,61 +104,92 @@ class App extends Component {
           <h1 className="App-title">{this.state.helloWorld}</h1>
         </header>
         <p className="App-intro">
-        <form>
-          <input 
-            type="text" 
-            //The internal component state is the single source of truth for the input field.
-            //The unidirectional data flow loop for the input field is self-contained now
-            value={searchTerm}
-            onChange={this.onSearchChange}     
-          />
-        </form>
-       <h4> Below is your predefined list:</h4>
-        {        
-          //Using the list from my local state in my component
-         // this.state.list.filter(isSearched(this.state.searchTerm)).map(item => 
-         list.filter(isSearched(searchTerm)).map(item => 
-            <div key = {item.objectID}>
-              <span>
-                <a href={item.url}>{item.title} </a>
-              </span>
-              <span>{item.author} </span>
-              <span>{item.num_comments} </span>
-              <span>{item.points}</span>
-              <span>
-                <button
-                //  onClick = {() => this.onDismiss(item.objectID)}
-                   // onClick = {console.log(item.objectID)}
-                   /*onClick = {function(){
-                     console.log(item.objectID)
-                   }}
-                   */
-                  onClick = {() => console.log(item.objectID)}
-                  type="button"
-                >
-                  Dismiss
-                </button>
-              </span>
-              Testing binding this:
-              <button
-                //method 1: bind this to the doSomething method in constructor
-                 onClick = {this.doSomething}
-                //method 2: bind this inside the render class method.
-                //Avoid because it is binding the class method everytime render rusn
-
-                //onClick = {this.doSomething.bind(this)}
-                type="button"
-              >
-              Do Something
-              </button>
-           </div>
-          )}
-        </p>
-        <p> {this.state.comment} </p>
-        
+       
+        <Search 
+          value={searchTerm} 
+          onChange={this.onSearchChange}
+        > 
+        <span>Search by title: </span>
+       
+        </Search>
+        <h4> Below is your predefined list:</h4> 
+       
+        <Table 
+          list={list}
+          pattern={searchTerm}
+          onDismiss={this.onDismiss}
+        />
+        </p>  
       </div>
     );
   }
+}
+
+//Create a Search component
+class Search extends Component {
+  render(){
+    const {value, onChange, children} = this.props;
+    return(
+      <form>
+        {children}
+      <input 
+        type="text" 
+        //The internal component state is the single source of truth for the input field.
+        //The unidirectional data flow loop for the input field is self-contained now
+        value={value}
+        onChange={onChange}     
+      />
+    </form>
+    )
+  }
+}
+
+//Create a Table component (declaring)
+class Table extends Component{
+  render(){
+    const {list,pattern,onDismiss} = this.props;
+    return(
+      <div>
+         {list.filter(isSearched(pattern)).map(item => 
+          <div key = {item.objectID}>
+            <span>
+              <a href={item.url}>{item.title} </a>
+            </span>
+            <span>{item.author} </span>
+            <span>{item.num_comments} </span>
+            <span>{item.points}</span>
+            <span>  
+              <Button onClick={() => onDismiss(item.objectID)}>
+               Dismiss
+              </Button>
+            </span>
+         </div>
+        )}
+    </div>
+    );
+  }
+}
+
+class Button extends Component{
+  render(){
+    const {
+      onClick,
+      className = '',
+      children,
+    } =  this.props;
+  
+  return(
+    <button
+     
+      onClick = {onClick}
+
+      className = {className}
+      type="button"
+    >
+    {children}
+    </button>
+  );  
+}
 }
 
 export default App;
