@@ -1,3 +1,10 @@
+//App.js contains the a React ES6 class component with the name App, which is  A COMPONENT DECLARATION.
+//After a component is declared, you can use it as element everywhere in your app. 
+//The element the component declaration returns is specfiied in the render method. Elements are what components are made of.
+
+//Note: The App component is not yet instantiated, it is only declared in this file. The instantiation of the component would take
+//place somehwere in our JSX with  <App /> (clue: index.js)
+
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -21,9 +28,26 @@ const list = [
   },
 ]
 
+//Declaring the App component, but it extends from another "component" class called Component 
+//extends is like inheritance in OOP. Used to pass over functionalities from one class to another class.
+//The Component class encapsulates all the implementation details of a React component. It enables developers to use classes as components in React
+
 class App extends Component {
+
+    //The construct ir called only once when the component is initialized
+    //initialize internal component state
+    //mandatory to call the super method because this "App" component is a subclass of Component
+  constructor(props){
+    super(props);
+    //The state is bound to the class using the this object. You can acess the local state in your whole component
+    //the list is part of the component now
+    this.state = {
+      list: list,
+      helloWorld: 'Welcome to the Road to learn React',
+      comment: "This is coming form the local state of this component woooo!"
+    }
+  }
   render() {
-    const helloWorld = 'Welcome to the Road to learn React';
     const user = {
         firstName: "Maribel",
         lastName: "Duran"
@@ -33,27 +57,27 @@ class App extends Component {
       <div className="App">
         <header className="App-header">
           <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">{helloWorld}</h1>
+          <h1 className="App-title">{this.state.helloWorld}</h1>
           <h3>Welcome {user.firstName} {user.lastName}!</h3>
         </header>
         <p className="App-intro">
        <h4> Below is your predefined list:</h4>
 
-        {
-          list.map(function(item){
-            return <div key = {item.objectID}>
-            <span>
-              <a href={item.url}>{item.title} </a>
-            </span>
-            <span>{item.author} </span>
-            <span>{item.num_comments} </span>
-            <span>{item.points}</span>
-            
+        {        
+          //Using the list from my local state in my component
+          this.state.list.map(item => 
+            <div key = {item.objectID}>
+              <span>
+                <a href={item.url}>{item.title} </a>
+              </span>
+              <span>{item.author} </span>
+              <span>{item.num_comments} </span>
+              <span>{item.points}</span>
            </div>
-          })
-        }
-         
+          )}
         </p>
+        <p> {this.state.comment} </p>
+        
       </div>
     );
   }
