@@ -9,24 +9,10 @@ import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
 
-const list = [
-  {
-    title: 'React',
-    url: 'https://facebook.github.io/react/',
-    author: 'Jordan Walke',
-    num_comments: 3,
-    points: 4,
-    objectID: 0,
-  },
-  {
-    title: 'Redux',
-    url: 'https://github.com/reactjs/redux',
-    author: 'Dan Abramov, Andrew Clark',
-    num_comments: 2,
-    points: 5,
-    objectID: 1,
-  },
-]
+const DEFAULT_QUERY = 'redux';
+const PATH_BASE = 'https://hn.algolia.com/api/v1';
+const PATH_SEARCH = '/search';
+const PARAM_SEARCH = 'query=';
 
 //higher order function does at least one of the following
 //1) takes one or more functions as arguments
@@ -58,11 +44,11 @@ class App extends Component {
     this.state = {
       //Since the property name is the same of the variable name in this object, we can shorten the following line
       //list: list,
-      list,
-      helloWorld: 'Welcome to the Road to learn React',
-      comment: "This is coming form the local state of this component woooo!",
-      searchTerm: "",
+      result: null,
+      searchTerm: DEFAULT_QUERY,
     };
+    this.setSearchTopStories = this.setSearchTopStories.bind(this);
+    this.fetchSearchTopStories = this.fetchSearchTopStories.bind(this);
     this.onDismiss = this.onDismiss.bind(this);
     this.doSomething = this.doSomething.bind(this);
     this.onSearchChange = this.onSearchChange.bind(this);
@@ -74,8 +60,23 @@ class App extends Component {
   }
   doSomething(){
     console.log(this);
-    
   }
+  setSearchTopStories(result) {
+    this.setState({ result });
+  }
+
+  fetchSearchTopStories(searchTerm) {
+    fetch(`${PATH_BASE}${PATH_SEARCH}?${PARAM_SEARCH}${searchTerm}`)
+    .then(response => response.json())
+    .then(result => this.setSearchTopStories(result))
+    .catch(e => e);
+  }
+
+  componentDidMount() {
+    const { searchTerm } = this.state;
+    this.fetchSearchTopStories(searchTerm);
+  }
+
   //When using a handler in your element, you get access to the "synthetic" React
   //event in your callback function's signature
   onSearchChange(event){
@@ -84,8 +85,10 @@ class App extends Component {
   }
   onDismiss(id){
     const isNotId =  item => item.objectID !== id;
-    const updatedList = this.state.list.filter(isNotId);
-    this.setState({list: updatedList});
+    const updatedHits = this.state.result.hits.filter(isNotId);
+    this.setState({
+      result: Object.assign({}, this.state.result, { hits: updatedHits })
+    });
   }
   render() {
 
@@ -95,8 +98,11 @@ class App extends Component {
     //const list = this.state.list
     
     //ES6
-    const {searchTerm, list} = this.state;
-
+    const {searchTerm, result} = this.state;
+    if (!result) {
+      return null;
+    }
+    console.log(result.hits);
     return (
       <div className="App">
         <header className="App-header">
@@ -114,7 +120,7 @@ class App extends Component {
         <h4> Below is your predefined list:</h4> 
         </div>
         <Table 
-          list={list}
+          list={result.hits}
           pattern={searchTerm}
           onDismiss={this.onDismiss}
         />
