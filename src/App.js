@@ -103,24 +103,23 @@ class App extends Component {
           <img src={logo} className="App-logo" alt="logo" />
           <h1 className="App-title">{this.state.helloWorld}</h1>
         </header>
-        <p className="App-intro">
-       
+        <div className="page">
+      <div className="interactions">
         <Search 
           value={searchTerm} 
           onChange={this.onSearchChange}
         > 
-        <span>Search by title: </span>
-       
+        <span>Search by title: </span> 
         </Search>
         <h4> Below is your predefined list:</h4> 
-       
+        </div>
         <Table 
           list={list}
           pattern={searchTerm}
           onDismiss={this.onDismiss}
         />
-        </p>  
-      </div>
+       </div>
+       </div>
     );
   }
 }
@@ -142,18 +141,27 @@ const Search = ({value, onChange, children}) =>
 //Create a Table component (declaring)
 //Stateless functional component
 const Table = ({list, pattern, onDismiss}) => 
-  <div>
+  <div className="table">
     {list.filter(isSearched(pattern)).map(item => 
-    <div key = {item.objectID}>
-    <span>
-      <a href={item.url}>{item.title} </a>
+    <div key={item.objectID} className="table-row">
+    <span style={{ width: '40%' }}>
+    <a href={item.url}>{item.title}</a>
     </span>
-    <span>{item.author} </span>
-    <span>{item.num_comments} </span>
-    <span>{item.points}</span>
-    <span>  
-    <Button onClick={() => onDismiss(item.objectID)}>
-      Dismiss
+    <span style={{ width: '30%' }}>
+    {item.author}
+    </span>
+    <span style={{ width: '10%' }}>
+    {item.num_comments}
+    </span>
+    <span style={{ width: '10%' }}>
+    {item.points}
+    </span>
+    <span style={{ width: '10%' }}>
+    <Button
+    onClick={() => onDismiss(item.objectID)}
+    className="button-inline"
+    >
+    Dismiss
     </Button>
     </span>
     </div>
