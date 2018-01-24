@@ -8,6 +8,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import fetch from 'isomorphic-fetch'
+import PropTypes from 'prop-types';
 import './App.css';
 
 const DEFAULT_QUERY = 'redux';
@@ -215,6 +216,13 @@ const Search = ({value, onChange, onSubmit, children}) =>
   </button>
 </form>
 
+Search.propTypes = {
+  value: PropTypes.string, 
+  onChange: PropTypes.func.isRequired, 
+  onSubmit: PropTypes.func.isRequired, 
+  children: PropTypes.node.isRequired,
+};
+
 //Create a Table component (declaring)
 //Stateless functional component
 const Table = ({list, pattern, onDismiss}) => 
@@ -245,6 +253,20 @@ const Table = ({list, pattern, onDismiss}) =>
   )}
 </div>
 
+//Define a PropType interface for the Table component
+Table.propTypes = {
+  list: PropTypes.arrayOf(
+    PropTypes.shape({
+    objectID: PropTypes.string.isRequired,
+    author: PropTypes.string,
+    url: PropTypes.string,
+    num_comments: PropTypes.number,
+    points: PropTypes.number,
+    })
+  ).isRequired,
+  onDismiss: PropTypes.func.isRequired,
+};
+
 //Stateless functional compoent
 const Button = ({onClick, className = '', children}) =>
 <button
@@ -254,6 +276,20 @@ const Button = ({onClick, className = '', children}) =>
   >
   {children}
 </button>
+
+//Assign a props interface to a component
+//How to create a prop interface to a component
+//You take every argument from the function signature 
+//and assign a PropType to it!
+Button.propTypes = {
+  onClick: PropTypes.func.isRequired,
+  className: PropTypes.string,
+  children: PropTypes.node.isRequired,
+};
+
+Button.defaultProps = {
+  className: '',
+};
 
 export default App;
 
