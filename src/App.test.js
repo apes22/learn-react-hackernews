@@ -50,7 +50,7 @@ describe('Button', () => {
   ReactDOM.render(<Button>Give Me More</Button>, div);
   });
 
-  it('it contains the correct class name', () => {
+  it('it contains button-class-test name ', () => {
     const element = shallow(
     <Button { ...props } />
     );
