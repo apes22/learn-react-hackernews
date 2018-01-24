@@ -87,7 +87,11 @@ class App extends Component {
     const isNotId =  item => item.objectID !== id;
     const updatedHits = this.state.result.hits.filter(isNotId);
     this.setState({
-      result: Object.assign({}, this.state.result, { hits: updatedHits })
+      //result: Object.assign({}, this.state.result, { hits: updatedHits })
+      //use  spread operator
+    
+      
+      result: {...this.state.result, hits:updatedHits}
     });
   }
   render() {
@@ -99,10 +103,6 @@ class App extends Component {
     
     //ES6
     const {searchTerm, result} = this.state;
-    if (!result) {
-      return null;
-    }
-    console.log(result.hits);
     return (
       <div className="App">
         <header className="App-header">
@@ -117,13 +117,15 @@ class App extends Component {
         > 
         <span>Search by title: </span> 
         </Search>
-        <h4> Below is your predefined list:</h4> 
         </div>
-        <Table 
-          list={result.hits}
-          pattern={searchTerm}
-          onDismiss={this.onDismiss}
-        />
+        { result ?
+          <Table 
+            list={result.hits}
+            pattern={searchTerm}
+            onDismiss={this.onDismiss}
+          />
+          : null
+        }
        </div>
        </div>
     );
