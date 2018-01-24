@@ -7,6 +7,7 @@
 
 import React, { Component } from 'react';
 import logo from './logo.svg';
+import fetch from 'isomorphic-fetch'
 import './App.css';
 
 const DEFAULT_QUERY = 'redux';
@@ -28,9 +29,6 @@ function isSearched(searchTerm){
   }
 }
 */
-//ES6
-const isSearched = searchTerm => item =>
-item.title.toLowerCase().includes(searchTerm.toLowerCase());
 //Declaring the App component, but it extends from another "component" class called Component 
 //extends is like inheritance in OOP. Used to pass over functionalities from one class to another class.
 //The Component class encapsulates all the implementation details of a React component. It enables developers to use classes as components in React
@@ -258,3 +256,9 @@ const Button = ({onClick, className = '', children}) =>
 </button>
 
 export default App;
+
+export{
+  Button,
+  Search,
+  Table,
+};
