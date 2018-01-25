@@ -7,7 +7,8 @@
 
 import React, { Component } from 'react';
 import logo from './logo.svg';
-import fetch from 'isomorphic-fetch'
+import fetch from 'isomorphic-fetch';
+import { sortBy } from 'lodash';
 import PropTypes from 'prop-types';
 import './App.css';
 
@@ -30,10 +31,19 @@ function isSearched(searchTerm){
   }
 }
 */
+//higher order components. take in a component as an argument and 
+//returns a component as output
+const withLoading = (Component) => ({isLoading, ...rest}) =>
+  isLoading
+  ? <Loading />
+  : <Component {...rest} />
+
+
+
+
 //Declaring the App component, but it extends from another "component" class called Component 
 //extends is like inheritance in OOP. Used to pass over functionalities from one class to another class.
 //The Component class encapsulates all the implementation details of a React component. It enables developers to use classes as components in React
-
 class App extends Component {
 
     //The construct is called only once when the component is initialized
@@ -51,6 +61,7 @@ class App extends Component {
       searchTerm: DEFAULT_QUERY,
       error: null,
       isLoading: false,
+      
     };
 
     this.needsToSearchTopStories = this.needsToSearchTopStories.bind(this);
@@ -192,26 +203,16 @@ class App extends Component {
             onDismiss={this.onDismiss}
           />
         }
-        {
-          isLoading ?
-          <Loading />
-          :
-          <Button onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
-          More
-        </Button>
-        }   
+          <ButtonWithLoading 
+           isLoading={isLoading}
+           onClick={() => this.fetchSearchTopStories(searchKey, page + 1)}>
+            More
+            </ButtonWithLoading> 
         </div>
        </div>
     );
   }
 }
-
-const Loading = () => 
-//<div>Loading...</div>
-<div>
-<i class="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
-<span class="sr-only">Loading...</span>
-</div>
 
 //Create a Search component
 //Stateless functional component
@@ -295,6 +296,15 @@ const Button = ({onClick, className = '', children}) =>
   >
   {children}
 </button>
+
+const Loading = () => 
+//<div>Loading...</div>
+<div>
+<i className="fa fa-spinner fa-pulse fa-3x fa-fw"></i>
+<span className="sr-only">Loading...</span>
+</div>
+
+const ButtonWithLoading = withLoading(Button);
 
 //Assign a props interface to a component
 //How to create a prop interface to a component
