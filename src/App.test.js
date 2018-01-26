@@ -22,13 +22,18 @@ describe('App', () => {
   });
 
   describe('Search', () => {
+    const props = {
+      onSubmit: () => alert("Submitting!"),
+      onChange: () => alert("Will Change!"),
+    };
+
     it('renders without crashing', () => {
     const div = document.createElement('div');
-    ReactDOM.render(<Search>Search</Search>, div);
+    ReactDOM.render(<Search {...props}>Search</Search>, div);
     });
     test('has a valid snapshot', () => {
     const component = renderer.create(
-    <Search>Search</Search>
+    <Search {...props} >Search</Search>
     );
     let tree = component.toJSON();
     expect(tree).toMatchSnapshot();
@@ -71,7 +76,8 @@ describe('Table', () => {
       { title: '1', author: '1', num_comments: 1, points: 2, objectID: 'y' },
       { title: '2', author: '2', num_comments: 1, points: 2, objectID: 'z' },
     ],
-    onDismiss: () => alert("Will Delete!"),
+    sortKey: 'TITLE',
+    isSortReverse: false,
   };
 
   it('shows two items in list', () => {

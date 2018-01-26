@@ -44,22 +44,99 @@ exports[`App has a valid snapshot 1`] = `
     </div>
     <div
       className="table"
-    />
-    <button
-      className=""
-      onClick={[Function]}
-      type="button"
     >
-      More
-    </button>
+      <div
+        className="table-header"
+      >
+        <span
+          style={
+            Object {
+              "width": "40%",
+            }
+          }
+        >
+          <button
+            className="button-inline"
+            onClick={[Function]}
+            type="button"
+          >
+            Title
+          </button>
+        </span>
+        <span
+          style={
+            Object {
+              "width": "30%",
+            }
+          }
+        >
+          <button
+            className="button-inline"
+            onClick={[Function]}
+            type="button"
+          >
+            Author
+          </button>
+        </span>
+        <span
+          style={
+            Object {
+              "width": "10%",
+            }
+          }
+        >
+          <button
+            className="button-inline"
+            onClick={[Function]}
+            type="button"
+          >
+            Comments
+          </button>
+        </span>
+        <span
+          style={
+            Object {
+              "width": "10%",
+            }
+          }
+        >
+          <button
+            className="button-inline"
+            onClick={[Function]}
+            type="button"
+          >
+            Points
+          </button>
+        </span>
+        <span
+          style={
+            Object {
+              "width": "10%",
+            }
+          }
+        >
+          Archive
+        </span>
+      </div>
+    </div>
+    <div>
+      <i
+        className="fa fa-spinner fa-pulse fa-3x fa-fw"
+      />
+      <span
+        className="sr-only"
+      >
+        Loading...
+      </span>
+    </div>
   </div>
 </div>
 `;
 
 exports[`Button has a valid snapshot 1`] = `
 <button
-  className=""
-  onClick={undefined}
+  className="button-class-test"
+  onClick={[Function]}
   type="button"
 >
   Give Me More
@@ -68,11 +145,11 @@ exports[`Button has a valid snapshot 1`] = `
 
 exports[`Search has a valid snapshot 1`] = `
 <form
-  onSubmit={undefined}
+  onSubmit={[Function]}
 >
   Search
   <input
-    onChange={undefined}
+    onChange={[Function]}
     type="text"
     value={undefined}
   />
@@ -88,6 +165,79 @@ exports[`Table has a valid snapshot 1`] = `
 <div
   className="table"
 >
+  <div
+    className="table-header"
+  >
+    <span
+      style={
+        Object {
+          "width": "40%",
+        }
+      }
+    >
+      <button
+        className="button-inline button-active"
+        onClick={[Function]}
+        type="button"
+      >
+        Title
+      </button>
+    </span>
+    <span
+      style={
+        Object {
+          "width": "30%",
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        Author
+      </button>
+    </span>
+    <span
+      style={
+        Object {
+          "width": "10%",
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        Comments
+      </button>
+    </span>
+    <span
+      style={
+        Object {
+          "width": "10%",
+        }
+      }
+    >
+      <button
+        className="button-inline"
+        onClick={[Function]}
+        type="button"
+      >
+        Points
+      </button>
+    </span>
+    <span
+      style={
+        Object {
+          "width": "10%",
+        }
+      }
+    >
+      Archive
+    </span>
+  </div>
   <div
     className="table-row"
   >
