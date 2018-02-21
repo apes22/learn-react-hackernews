@@ -9,7 +9,7 @@ import React, { Component } from 'react';
 import Search from './components/search';
 import Table from './components/table';
 import Button from './components/button';
-import Loading, {withLoading} from './components/loading';
+import {withLoading} from './components/loading';
 import logo from './logo.svg';
 import fetch from 'isomorphic-fetch';
 import './App.css';
@@ -69,10 +69,6 @@ class App extends Component {
       console.log(this);
     }
     */
-  }
-  onSort(sortKey){
-    const isSortReverse = this.state.sortKey === sortKey && !this.state.isSortReverse;
-    this.setState({sortKey});
   }
 
   needsToSearchTopStories(searchTerm) {
@@ -140,8 +136,6 @@ class App extends Component {
     this.setState({
       //result: Object.assign({}, this.state.result, { hits: updatedHits })
       //use  spread operator
-    
-      
       results: {...results, [searchKey]: {hits: updatedHits, page}
     }
     });
@@ -158,9 +152,7 @@ class App extends Component {
       results,
       searchKey,
       error,
-      isLoading,
-      sortKey,
-      isSortReverse
+      isLoading
     } = this.state;
 
     const page = (
