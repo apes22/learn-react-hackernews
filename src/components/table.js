@@ -8,14 +8,9 @@ const SORTS = {
     NONE: list => list,
     TITLE: list => sortBy(list, 'title'),
     AUTHOR: list => sortBy(list, 'author'),
-    COMMENTS: list => sortBy(list, 'num_comments').reverse(),
-    POINTS: list => sortBy(list, 'points').reverse(),
+    COMMENTS: list => sortBy(list, 'num_comments'),
+    POINTS: list => sortBy(list, 'points'),
 };
-
-
-const Arrow = ({isReversed}) => isReversed 
-? <span class="fa fa-angle-up"></span>
-: <span class="fa fa-angle-down"></span>
 
 //Create a Table component (declaring)
 //Stateless functional component
@@ -48,33 +43,34 @@ class Table extends Component {
       ? sortedList.reverse()
       : sortedList;
 
-      return(
+    return(
       <div className="table">
       <div className="table-header">
         <span style={{ width: '40%' }}>
         <Sort
         sortKey={'TITLE'}
         onSort={this.onSort}
+        isSortReverse={isSortReverse}
         activeSortKey={sortKey}
         >
         Title
-       
         </Sort>
         </span>
         <span style={{ width: '30%' }}>
         <Sort
         sortKey={'AUTHOR'}
         onSort={this.onSort}
+        isSortReverse={isSortReverse}
         activeSortKey={sortKey}
         >
         Author 
-       
         </Sort>
         </span>
         <span style={{ width: '10%' }}>
         <Sort
         sortKey={'COMMENTS'}
         onSort={this.onSort}
+        isSortReverse={isSortReverse}
         activeSortKey={sortKey}
         >
         Comments
@@ -84,6 +80,7 @@ class Table extends Component {
         <Sort
         sortKey={'POINTS'}
         onSort={this.onSort}
+        isSortReverse={isSortReverse}
         activeSortKey={sortKey}
         >
         Points
